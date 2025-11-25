@@ -1,6 +1,3 @@
-
-## main.py
-```python
 from collections import deque
 
 
@@ -12,23 +9,36 @@ def bfs_distances(graph, start):
     graph: dict mapping stage name (string) to list of neighbor stage names.
     start: starting stage name (string).
 
-    Return value:
-        - A dict dist where dist[node] is the minimum number of edges
-          from start to node.
-        - dist[start] should be 0.
-        - Only include reachable nodes.
-        - If start is not in graph, return {}.
+    Returns:
+        A dict dist where:
+            - dist[node] = minimum number of edges from start to node
+            - dist[start] = 0
+            - Only includes reachable nodes
+        If start not in graph → return {}
     """
-    # TODO Step 1: Read and understand the problem above.
-    # TODO Step 2: Re-phrase what this function should do in a short comment.
-    # TODO Step 3: Identify inputs, output, and key variables (queue, visited, dist).
-    # TODO Step 4: Plan the BFS steps on paper or in comments.
-    # TODO Step 5: Write pseudocode for BFS that fills the dist dictionary.
-    # TODO Step 6: Turn your pseudocode into working Python code here.
-    # TODO Step 7: Test using small graph examples to verify the distances.
-    # TODO Step 8: Make sure your solution is O(V + E), not slower.
 
-    raise NotImplementedError("bfs_distances is not implemented yet")
+    # If start not in the graph, nothing to compute
+    if start not in graph:
+        return {}
+
+    # Distance dictionary (answer)
+    dist = {start: 0}
+
+    # BFS queue
+    queue = deque([start])
+
+    # BFS traversal
+    while queue:
+        node = queue.popleft()
+        current_distance = dist[node]
+
+        # Explore neighbors
+        for neighbor in graph.get(node, []):
+            if neighbor not in dist:  # not visited
+                dist[neighbor] = current_distance + 1
+                queue.append(neighbor)
+
+    return dist
 
 
 if __name__ == "__main__":
